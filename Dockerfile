@@ -1,11 +1,12 @@
-# Use lightweight nginx image
-FROM nginx:alpine
+FROM python:3.9-slim
 
-# Remove default nginx content
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /app
 
-# Copy our app to nginx
-COPY index.html /usr/share/nginx/html/
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port
+COPY app.py .
+
 EXPOSE 80
+
+CMD ["python", "app.py"]
